@@ -15,15 +15,17 @@ class TodosRepository {
   }
 
   Future<bool> updateTodo(Todo todo) async {
-    return await DatabaseHelper.instance.updateTodo(todo);
+    await DatabaseHelper.instance.updateTodo(todo);
+    return true;
   }
 
-  Future<Todo> addTodo(Todo todo) async {
+  Future<bool> addTodo(Todo todo) async {
     await DatabaseHelper.instance.addTodo(todo);
-    return todo;
+    return true;
   }
 
-  Future<bool> deleteTodo(int id) async {
-    return await DatabaseHelper.instance.deleteTodo(id);
+  Future<bool> deleteTodo(Todo todo) async {
+    await DatabaseHelper.instance.deleteTodo(todo.id);
+    return true;
   }
 }

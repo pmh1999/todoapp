@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 
 class TodosController extends GetxController {
   final todos = <Todo>[].obs;
+  final allTodos = <Todo>[].obs;
   final filter = 0.obs;
   @override
   void onInit() {
@@ -16,6 +17,7 @@ class TodosController extends GetxController {
   void onDispose() {}
 
   Future<void> fetchAll() async {
+    allTodos.value = await Get.find<TodosRepository>().getAll();
     if (filter.value == 0)
       todos.value = await Get.find<TodosRepository>().getAll();
     else if (filter.value == 1)
@@ -32,14 +34,15 @@ class TodosController extends GetxController {
     fetchAll();
   }
 
-  Future<void> addTodo(String title, String task) async {
-    Todo tmp = Todo(todos.length, title, task, false);
-    await Get.find<TodosRepository>().addTodo(tmp);
+  Future<void> addTodo(Todo todo) async {
+    await Get.find<TodosRepository>().addTodo(todo);
+    todos.insert(0, todo);
+    return;
   }
 
-  Future<void> deleteTodo(int index) async {
-    await Get.find<TodosRepository>().deleteTodo(todos[index].id!);
-    fetchAll();
+  Future<void> deleteTodo(Todo todo) async {
+    await Get.find<TodosRepository>().deleteTodo(todo);
+    todos.remove(todo);
   }
 
   void filterTodos(int index) {

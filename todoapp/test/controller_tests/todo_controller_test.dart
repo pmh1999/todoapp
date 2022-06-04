@@ -5,15 +5,18 @@ import 'package:mockito/annotations.dart';
 import 'package:todoapp/model/todo.dart';
 import 'package:todoapp/repository/todo_repository.dart';
 import 'package:todoapp/controller/todo_controller.dart';
-import 'todo_controller_test.mock.dart';
+import 'todo_controller_test.mocks.dart';
 
-@GenerateMocks([TodosRepository, Todo])
+@GenerateMocks([], customMocks: [
+  MockSpec<TodosRepository>(returnNullOnMissingStub: true),
+  MockSpec<Todo>(returnNullOnMissingStub: true)
+])
 void main() {
-  late MockTodoRepository mockRepo;
+  late MockTodosRepository mockRepo;
 
   setUp(() {
     Get.reset();
-    mockRepo = MockTodoRepository();
+    mockRepo = MockTodosRepository();
 
     Get.put<TodosRepository>(mockRepo);
   });
@@ -43,26 +46,11 @@ void main() {
     expect(controller.todos.length, 3);
   });
 
-  test('add a new user correctly', () async {
-    when(mockRepo.getAll()).thenAnswer((_) async => [MockTodo()]);
-    when(mockRepo.addTodo(MockTodo())).thenAnswer((_) async => MockTodo());
-
-    final controller = Get.put(TodosController());
-    await Future.delayed(const Duration(milliseconds: 10));
-
-    // Before adding
-    expect(controller.todos.length, 1);
-
-    // Adding
-
-    await controller.addTodo("test", "test");
-    expect(controller.todos.length, 2);
-  });
-  test('Delete users works correctly', () async {
+  test('Delete todo works correctly', () async {
     final todoToDelete = MockTodo();
     when(mockRepo.getAll())
         .thenAnswer((_) async => [MockTodo(), MockTodo(), todoToDelete]);
-    when(mockRepo.deleteTodo(0)).thenAnswer((_) async => true);
+    when(mockRepo.deleteTodo(any)).thenAnswer((_) async => true);
 
     final controller = Get.put(TodosController());
     await Future.delayed(const Duration(milliseconds: 10));
@@ -72,8 +60,25 @@ void main() {
     expect(controller.todos, contains(todoToDelete));
 
     // deleting
-    await controller.deleteTodo(todoToDelete.id);
+    await controller.deleteTodo(todoToDelete);
     expect(controller.todos.length, 2);
     expect(controller.todos, isNot(contains(todoToDelete)));
+  });
+
+  test('add a new todo correctly', () async {
+    final newtodo = MockTodo();
+    when(mockRepo.getAll()).thenAnswer((_) async => [newtodo]);
+    when(mockRepo.addTodo(MockTodo())).thenAnswer((_) async => true);
+
+    final controller = Get.put(TodosController());
+    await Future.delayed(const Duration(milliseconds: 10));
+
+    // Before adding
+    expect(controller.todos.length, 1);
+
+    // Adding
+
+    await controller.addTodo(newtodo);
+    expect(controller.todos.length, 2);
   });
 }
