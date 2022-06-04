@@ -39,22 +39,35 @@ class DatabaseHelper {
     return res.map((e) => Todo.fromMap(e)).toList();
   }
 
-  Future<int> insert(Todo todo) async {
+  Future<List<Todo>> getAllCompleted() async {
     Database? db = await instance.database;
-    var res = await db!.insert(table, todo.toMap());
-    return res;
+    var res = await db!.rawQuery('SELECT * FROM Todo where completed = 1');
+    return res.map((e) => Todo.fromMap(e)).toList();
   }
 
-  Future<int> update(Todo todo) async {
+  Future<List<Todo>> getAllProcessing() async {
+    Database? db = await instance.database;
+    var res = await db!.rawQuery('SELECT * FROM Todo where completed = 0');
+    return res.map((e) => Todo.fromMap(e)).toList();
+  }
+
+  Future<bool> addTodo(Todo todo) async {
+    Database? db = await instance.database;
+    var res = await db!.insert(table, todo.toMap());
+    return true;
+  }
+
+  Future<bool> updateTodo(Todo todo) async {
     Database? db = await instance.database;
     var res = await db!
         .update(table, todo.toMap(), where: 'id =?', whereArgs: [todo.id]);
-    return res;
+    return true;
   }
 
-  Future<int> delete(int? id) async {
+  Future<bool> deleteTodo(int? id) async {
     Database? db = await instance.database;
-    return await db!.delete(table, where: '$columnId = ?', whereArgs: [id]);
+    await db!.delete(table, where: '$columnId = ?', whereArgs: [id]);
+    return true;
   }
 
   Future<void> clearTable() async {

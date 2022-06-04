@@ -21,6 +21,7 @@ class Todo {
   Todo.fromMap(Map<String, Object?> map) {
     id = map["id"] as int?;
     title = map["title"] as String?;
+    task = map["task"] as String?;
     done = map["completed"] == 1;
   }
 }
