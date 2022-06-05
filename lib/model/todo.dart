@@ -1,5 +1,6 @@
+
 class Todo {
-  int? id;
+  String? id;
   String? title;
   String? task;
   bool? done;
@@ -19,7 +20,7 @@ class Todo {
   Todo(this.id, this.title, this.task, this.done);
 
   Todo.fromMap(Map<String, Object?> map) {
-    id = map["id"] as int?;
+    id = map["id"] as String?;
     title = map["title"] as String?;
     task = map["task"] as String?;
     done = map["completed"] == 1;

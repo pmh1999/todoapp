@@ -1,14 +1,14 @@
-import 'package:flutter/material.dart';
 import 'package:todoapp/model/todo.dart';
 import 'package:todoapp/repository/todo_repository.dart';
 import 'package:get/get.dart';
+import 'package:uuid/uuid.dart';
 
 class TodosController extends GetxController {
   final todos = <Todo>[].obs;
-  final allTodos = <Todo>[].obs;
   final filter = 0.obs;
   @override
   void onInit() {
+    Get.put(TodosRepository());
     fetchAll();
     super.onInit();
   }
@@ -17,7 +17,6 @@ class TodosController extends GetxController {
   void onDispose() {}
 
   Future<void> fetchAll() async {
-    allTodos.value = await Get.find<TodosRepository>().getAll();
     if (filter.value == 0)
       todos.value = await Get.find<TodosRepository>().getAll();
     else if (filter.value == 1)
@@ -34,9 +33,10 @@ class TodosController extends GetxController {
     fetchAll();
   }
 
-  Future<void> addTodo(Todo todo) async {
-    await Get.find<TodosRepository>().addTodo(todo);
-    todos.insert(0, todo);
+  Future<void> addTodo(String title, String task) async {
+    final tmp = Todo(Uuid().v1(), title, task, false);
+    await Get.find<TodosRepository>().addTodo(tmp);
+    fetchAll();
     return;
   }
 

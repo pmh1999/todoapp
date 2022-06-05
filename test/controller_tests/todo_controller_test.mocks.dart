@@ -44,7 +44,7 @@ class MockTodosRepository extends _i1.Mock implements _i2.TodosRepository {
   @override
   _i3.Future<bool> addTodo(_i4.Todo? todo) =>
       (super.noSuchMethod(Invocation.method(#addTodo, [todo]),
-          returnValue: Future<bool>.value(false)) as _i3.Future<bool>);
+          returnValue: Future<bool>.value(true)) as _i3.Future<bool>);
   @override
   _i3.Future<bool> deleteTodo(_i4.Todo? todo) =>
       (super.noSuchMethod(Invocation.method(#deleteTodo, [todo]),
@@ -56,7 +56,7 @@ class MockTodosRepository extends _i1.Mock implements _i2.TodosRepository {
 /// See the documentation for Mockito's code generation for more information.
 class MockTodo extends _i1.Mock implements _i4.Todo {
   @override
-  set id(int? _id) => super.noSuchMethod(Invocation.setter(#id, _id),
+  set id(String? _id) => super.noSuchMethod(Invocation.setter(#id, _id),
       returnValueForMissingStub: null);
   @override
   set title(String? _title) =>

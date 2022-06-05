@@ -64,7 +64,7 @@ class DatabaseHelper {
     return true;
   }
 
-  Future<bool> deleteTodo(int? id) async {
+  Future<bool> deleteTodo(String? id) async {
     Database? db = await instance.database;
     await db!.delete(table, where: '$columnId = ?', whereArgs: [id]);
     return true;
