@@ -3,11 +3,11 @@ todo app
 
 ## Previews ⛶
 
-<img src="screenshot/ss1.jpg" alt="screenshots"> <img src="screenshot/ss2.jpg" alt="screenshots"> 
+<img src="screenshot/ss1.jpg" alt="screenshots"  height="350" width="160"> <img src="screenshot/ss2.jpg" alt="screenshots" height="350" width="160"> 
 
-<img src="screenshot/ss3.jpg" alt="screenshots"> <img src="screenshot/ss4.jpg" alt="screenshots"> 
+<img src="screenshot/ss3.jpg" alt="screenshots" height="350" width="160"> <img src="screenshot/ss4.jpg" alt="screenshots" height="350" width="160"> 
 
-<img src="screenshot/ss5.jpg" alt="screenshots"> <img src="screenshot/ss6.jpg" alt="screenshots"> 
+<img src="screenshot/ss5.jpg" alt="screenshots" height="350" width="160"> <img src="screenshot/ss6.jpg" alt="screenshots" height="350" width="160"> 
 
 
 
