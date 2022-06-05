@@ -1,6 +1,9 @@
 ## Todo app ⌒
 install app-release.apk
+<br/>
 run unit test in test/controller_tests/todo_controller_test.dart 
+<br/>
+
 run widget-test in test/widget_test
 
 ## Previews ⛶
